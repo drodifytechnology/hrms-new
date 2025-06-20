@@ -1791,7 +1791,7 @@ Route::group(
     Route::get('/evaluations', [MentorController::class, 'evaluations'])->name('mentor.evaluations');
     Route::post('/evaluations/submit', [MentorController::class, 'submitEvaluation'])->name('mentor.evaluations.submit');
     Route::post('/tasks/assign', [MentorController::class, 'assignTask'])->name('mentor.tasks.assign');
-    Route::get('/evaluations', [MentorController::class, 'evaluations'])->name('mentor.evaluations');
+    
 });
 
 

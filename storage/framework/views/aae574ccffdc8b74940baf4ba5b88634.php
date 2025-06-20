@@ -162,8 +162,8 @@
                 </li>
             <?php endif; ?>
             <?php if(Gate::check('View assigned interns') ): ?>
-               <li class="dash-item <?php echo e(Request::segment(1) == 'interns' ? 'active' : ''); ?>">
-                    <a href="<?php echo e(route('intern')); ?>"
+            <li class="dash-item <?php echo e(Request::segment(1) == 'interns' ? 'active' : ''); ?>">
+                <a href="<?php echo e(route('intern')); ?>"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
                             class="dash-mtext"><?php echo e(__('Interns')); ?></span></a>
                 </li>   
@@ -172,12 +172,20 @@
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
                             class="dash-mtext"><?php echo e(__('Recent Task Activity')); ?></span></a>
                 </li>
+              
                <!-- <li class="dash-item <?php echo e(Request::segment(1) == 'task-activity' ? 'active' : ''); ?>">
                     <a href="<?php echo e(route('intern.certificate')); ?>"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
                             class="dash-mtext"><?php echo e(__('Profile Summary')); ?></span></a>
                 </li> -->
 
+            <?php endif; ?>
+            <?php if(Gate::check('View assigned interns') ): ?>
+                <li class="dash-item <?php echo e(Request::segment(1) == 'evaluations' ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('mentor.evaluations')); ?>"
+                        class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
+                            class="dash-mtext"><?php echo e(__('Provide evaluations')); ?></span></a>
+                </li>
             <?php endif; ?>
             <?php if(Gate::check('Certificate') ): ?>
             <?php endif; ?>

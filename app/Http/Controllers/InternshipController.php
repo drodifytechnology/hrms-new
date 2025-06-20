@@ -76,7 +76,7 @@ class InternshipController extends Controller
             //     Employee::find( $request->secondary_mentor_id  )->update(['position' , 'secondary_mentor']);
             // }
             if ($request->hasFile('document') && $request->file('document')->isValid()) {
-                        $file_path = $request->file('document')->store('intern_document', 'public');
+                    $file_path = $request->file('document')->store('intern_document', 'public');
                     $employee_document = InternDocument::create(
                         [
                             'internship_id' => $internship['id'],
@@ -88,26 +88,15 @@ class InternshipController extends Controller
 
             }
             //give permission to intern
-            $role = DB::table('roles')->where('name', 'intern')->first();
+            
             $intern_user_id = DB::table('employees')->where('id', $request->intern_id)->first();
             
-            
-            DB::insert('INSERT INTO model_has_roles (role_id , model_type , model_id ) VALUES (?, ?, ?)', [
-                 $role->id,
-                'App\Models\User',
-                 $intern_user_id->user_id
-            ]);      
-            //give permission to mentor
-            $role = DB::table('roles')->where('name', 'mentor')->first();
             $mentor = DB::table('employees')->where('id', $request->primary_mentor_id)->first();
             
-            DB::insert('INSERT INTO model_has_roles (role_id , model_type , model_id ) VALUES (?, ?, ?)', [
-                 $role->id,
-                'App\Models\User',
-                 $mentor->user_id
-            ]);     
-            User::find($intern_user_id->user_id)->update(['type' => 'intern']);
-            User::find($mentor->user_id)->update(['type' => 'mentor']);
+             User::find($intern_user_id->user_id)->update(['type' => 'intern']);
+             User::find($mentor->user_id)->update(['type' => 'mentor']);
+            User::find($intern_user_id->user_id)->assignRole('intern');
+            User::find($mentor->user_id)->assignRole('mentor');
 
           
          return redirect()->route('internships.index')->with('success', 'Internship created successfully.');
@@ -172,6 +161,18 @@ class InternshipController extends Controller
 
                 $input    = $request->all();
                 $internship->fill($input)->save();
+                 //give permission to mentor
+                if( $request->intern_id != $internship->intern_id ){
+                    $intern_user_id = DB::table('employees')->where('id', $request->intern_id)->first();
+                    User::find($intern_user_id->user_id)->update(['type' => 'intern']);
+                    User::find($intern_user_id->user_id)->assignRole('intern');
+                }
+                if( $request->intern_id != $internship->intern_id ){
+                    
+                    $mentor = DB::table('employees')->where('id', $request->primary_mentor_id)->first();
+                    User::find($mentor->user_id)->update(['type' => 'mentor']);
+                    User::find($mentor->user_id)->assignRole('mentor');
+                }
 
                 if (\Auth::user()->type != 'employee') {
                     // return redirect()->route('employee.index')->with('success', 'Employee successfully updated.');
@@ -187,7 +188,10 @@ class InternshipController extends Controller
 
         public function destroy($id)
         {
-            if (Auth::user()->can('Delete Employee')) {
+            
+            
+            if (Auth::user()->can('Internship')) {
+                
                 $internship      = Internship::findOrFail($id);
                 $document          = InternDocument::where('internship_id', $internship->id)->first();
                 $dir = storage_path('uploads/intern_document/');
@@ -199,7 +203,32 @@ class InternshipController extends Controller
                     unlink($dir . $document->file_path);
                     $document->delete();
                 }
+                $intern =  $internship->intern_id;
+                $mentor = $internship->primary_mentor_id;
+                $mentor1 = $internship->secondary_mentor_id;
                 $internship->delete();
+                $InternExist = Internship::where('intern_id',$intern)->exists(); 
+                if(!$InternExist){
+                    
+                    $user = User::find(  $internship->intern_id->user_id);
+                    $user->removeRole('intern');
+                    $user->assignRole('Employee');
+                   
+                    
+                }
+                $mentorExist = Internship::where(['primary_mentor_id' => $mentor , 'secondary_mentor_id' => $mentor1])->exists(); 
+                if(!$mentorExist){
+                    $user = User::find(  $internship->primary_mentor_id->user_id);
+                    $user->removeRole('mentor');
+                    $user->assignRole('Employee');
+
+                    $user = User::find(  $internship->secondary_mentor_id->user_id);
+                    if($mentor1){
+                        $user->removeRole('mentor');
+                        $user->assignRole('Employee');
+                    }
+                }
+                
             
                 return redirect()->route('internships.index')->with('success', 'Internship successfully deleted.');
             } else {

@@ -45,6 +45,8 @@
                             </td>
                             <td>
                                 <button type="button" onclick="assignTask('{{ $internship->id }}','{{ $internship->intern->name }} - {{ $internship->department }}')" class="btn btn-primary btn-sm "  >Assign Task</button>
+                                <button type="button" onclick="assignTask('{{ $internship->id }}','{{ $internship->intern->name }} - {{ $internship->department }}')" class="btn btn-primary btn-sm "  >Assign Task</button>
+                                
                                 <!-- <button type="submit" class="btn btn-primary btn-sm">Assign Task</button> -->
                             </td>
                           </tr>
@@ -57,7 +59,7 @@
                 </div>
             </div>
         </div>
-       <div class="modal fade show-modal bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal fade show-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -68,10 +70,8 @@
                 </div>
                 <form method="POST" action="{{ route('mentor.tasks.assign') }}" class="mb-3" enctype="multipart/form-data">
                 <div class="modal-body">
-                        
                             @csrf
                             <input type="hidden" name="internship_id" id="internship_id" class="form-control" value="">
-                            
                             <div class="row" >
                                 <div class="form-group col-md-6">
                                     <label>Title</label>
@@ -104,7 +104,6 @@
                 </div>
             </div>
        </div>
-
         
         @endsection
         @push('script-page')

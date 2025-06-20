@@ -18,7 +18,7 @@
             <td>{{ $task->priority }}</td>
             <td>@include('components.status-badge', ['status' => $task->status])</td>
             <td>{{ $task->deadline ?? 'N/A' }}</td>
-            <td><a href="{{ asset('storage/' . $task->attachment) }}" download>Download attachment</a></td>
+            <td><a href="{{ asset('public/storage/' . $task->attachment) }}" download>Download attachment</a></td>
             <td>
                 <div class="progress">
                     <div class="progress-bar bg-info" role="progressbar" style="width: {{ $task->completion_percentage ?? 0 }}%">

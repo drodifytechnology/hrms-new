@@ -166,8 +166,8 @@
                 </li>
             @endif
             @if (Gate::check('View assigned interns') )
-               <li class="dash-item {{ Request::segment(1) == 'interns' ? 'active' : '' }}">
-                    <a href="{{ route('intern') }}"
+            <li class="dash-item {{ Request::segment(1) == 'interns' ? 'active' : '' }}">
+                <a href="{{ route('intern') }}"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
                             class="dash-mtext">{{ __('Interns') }}</span></a>
                 </li>   
@@ -176,12 +176,20 @@
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
                             class="dash-mtext">{{ __('Recent Task Activity') }}</span></a>
                 </li>
+              
                <!-- <li class="dash-item {{ Request::segment(1) == 'task-activity' ? 'active' : '' }}">
                     <a href="{{ route('intern.certificate') }}"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
                             class="dash-mtext">{{ __('Profile Summary') }}</span></a>
                 </li> -->
 
+            @endif
+            @if (Gate::check('View assigned interns') )
+                <li class="dash-item {{ Request::segment(1) == 'evaluations' ? 'active' : '' }}">
+                    <a href="{{ route('mentor.evaluations') }}"
+                        class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
+                            class="dash-mtext">{{ __('Provide evaluations') }}</span></a>
+                </li>
             @endif
             @if (Gate::check('Certificate') )
             @endif

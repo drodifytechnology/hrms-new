@@ -67,11 +67,12 @@ class MentorController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'deadline' => 'nullable|date',
-            'attachment' => 'required'
+            'attachment' => 'required',
+            'priority' => 'required|unique:intern_tasks'
         ]);
         $file_path = '';
-          if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
-                    $file_path = $request->file('attachment')->store('attachment', 'public');
+          if ($request->hasFile('attachment')) {
+                $file_path = $request->file('attachment')->store('attachment', 'public');
           }
 
         InternTask::create([

@@ -18,7 +18,7 @@
             <td><?php echo e($task->priority); ?></td>
             <td><?php echo $__env->make('components.status-badge', ['status' => $task->status], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?></td>
             <td><?php echo e($task->deadline ?? 'N/A'); ?></td>
-            <td><a href="<?php echo e(asset('storage/' . $task->attachment)); ?>" download>Download attachment</a></td>
+            <td><a href="<?php echo e(asset('public/storage/' . $task->attachment)); ?>" download>Download attachment</a></td>
             <td>
                 <div class="progress">
                     <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo e($task->completion_percentage ?? 0); ?>%">

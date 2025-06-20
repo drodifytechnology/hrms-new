@@ -69,7 +69,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="<?php echo e(route('mentor.tasks.assign')); ?>" class="mb-3">
+                <form method="POST" action="<?php echo e(route('mentor.tasks.assign')); ?>" class="mb-3" enctype="multipart/form-data">
                 <div class="modal-body">
                         
                             <?php echo csrf_field(); ?>
