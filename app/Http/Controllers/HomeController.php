@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function __construct()
     {
         
-        $this->middleware('2fa');
+        $this->middleware('2fa');   
     }
 
     public function index()
