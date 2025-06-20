@@ -93,7 +93,7 @@ class HomeController extends Controller
                 $officeTime['startTime'] = Utility::getValByName('company_start_time');
                 $officeTime['endTime']   = Utility::getValByName('company_end_time');
 
-                return view('dashboard.dashboard', compact('arrEvents', 'mentor' , 'announcements', 'employees', 'meetings', 'employeeAttendance', 'officeTime'));
+                return view('dashboard.dashboard', compact('arrEvents', 'announcements', 'employees', 'meetings', 'employeeAttendance', 'officeTime'));
             } 
             else if ($user->type == 'mentor') {
                 $employee = Employee::where('user_id' , Auth::id())->first();
