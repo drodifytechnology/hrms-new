@@ -2679,7 +2679,13 @@ class UsersTableSeeder extends Seeder
             'Delete Attachment',
             'Show Zoom meeting',
         ];
-        $InternemployeeRole->givePermissionTo($InternemployeePermission);
+        
+        foreach ($InternemployeePermission as $permission) {
+                $p    = Permission::where('name', '=', $permission)->firstOrFail();
+                $InternemployeeRole->givePermissionTo($p);    
+        }
+
+        // $InternemployeeRole->givePermissionTo($InternemployeePermission);
         //Intern
         $MentoremployeeRole       = Role::create(
             [
@@ -2742,7 +2748,10 @@ class UsersTableSeeder extends Seeder
             'Manage Zoom meeting',
             'Show Zoom meeting'
         ];
-        $MentoremployeeRole->givePermissionTo($mentoremployeePermission);   
+         foreach ($mentoremployeePermission as $permission) {
+                $p    = Permission::where('name', '=', $permission)->firstOrFail();
+                $MentoremployeeRole->givePermissionTo($p);    
+        }
 
         GenerateOfferLetter::defaultOfferLetter();
         ExperienceCertificate::defaultExpCertificat();
