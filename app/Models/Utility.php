@@ -2338,6 +2338,127 @@ class Utility extends Model
                 $hr_permission->givePermissionTo($permission);
             }
         }
+        //intern
+        
+        $intern_role_permission = [
+            'Manage Employee',
+            'Edit Employee',
+            'Show Employee',
+            'Manage Allowance',
+            'Certificate',
+            'Tasks',
+            'Intern Performance Graphs',
+            'Attendance percentage',
+            'Task completion trend',
+            'Manage Leave',
+            'Create Leave',
+            'Edit Leave',
+            'Delete Leave',
+            'Manage Meeting',
+            'Manage Ticket',
+            'Create Ticket',
+            'Edit Ticket',
+            'Delete Ticket',
+            'Manage Language',
+            'Manage TimeSheet',
+            'Create TimeSheet',
+            'Edit TimeSheet',
+            'Delete TimeSheet',
+            'Manage Attendance',
+            'Manage Document',
+            'Manage Career',
+            'Store Note',
+            'Delete Note',
+            'Store Comment',
+            'Delete Comment',
+            'Delete Attachment',
+            'Show Zoom meeting',
+        ];  
+
+        $intern_permission = Role::where('name', 'intern')->where('created_by', $company_id)->where('guard_name', 'web')->first();
+
+        if (empty($intern_permission)) {
+            $intern_permission                   = new Role();
+            $intern_permission->name             = 'hr';
+            $intern_permission->guard_name       = 'web';
+            $intern_permission->created_by       = $company_id;
+            $intern_permission->save();
+            foreach ($intern_role_permission as $permission_e) {
+                $permission = Permission::where('name', $permission_e)->first();
+                $intern_permission->givePermissionTo($permission);
+            }
+        }
+        //mentor
+        
+        $mentor_role_permission = [
+             'View assigned interns',
+            'Assign and update tasks',
+            'Provide evaluations',
+            'Track performance graphically',
+            'Manage Award',
+            'Manage Transfer',
+            'Manage Resignation',
+            'Create Resignation',
+            'Edit Resignation',
+            'Delete Resignation',
+            'Manage Travel',
+            'Manage Promotion',
+            'Manage Complaint',
+            'Create Complaint',
+            'Edit Complaint',
+            'Delete Complaint',
+            'Manage Warning',
+            'Create Warning',
+            'Edit Warning',
+            'Delete Warning',
+            'Manage Termination',
+            'Manage Employee',
+            'Edit Employee',
+            'Show Employee',
+            'Manage Allowance',
+            'Manage Event',
+            'Manage Announcement',
+            'Manage Leave',
+            'Create Leave',
+            'Edit Leave',
+            'Delete Leave',
+            'Manage Meeting',
+            'Manage Ticket',
+            'Create Ticket',
+            'Edit Ticket',
+            'Delete Ticket',
+            'Manage Language',
+            'Manage TimeSheet',
+            'Create TimeSheet',
+            'Edit TimeSheet',
+            'Delete TimeSheet',
+            'Manage Attendance',
+            'Manage Document',
+            'Manage Holiday',
+            'Manage Career',
+            'Manage Contract',
+            'Store Note',
+            'Delete Note',
+            'Store Comment',
+            'Delete Comment',
+            'Delete Attachment',
+            'Manage Zoom meeting',
+            'Show Zoom meeting',
+        ];  
+
+        $mentor_permission = Role::where('name', 'mentor')->where('created_by', $company_id)->where('guard_name', 'web')->first();
+
+        if (empty($mentor_permission)) {
+            $mentor_permission                   = new Role();
+            $mentor_permission->name             = 'hr';
+            $mentor_permission->guard_name       = 'web';
+            $mentor_permission->created_by       = $company_id;
+            $mentor_permission->save();
+            foreach ($mentor_role_permission as $permission_e) {
+                $permission = Permission::where('name', $permission_e)->first();
+                $mentor_permission->givePermissionTo($permission);
+            }
+        }
 
         $employee_role_permission = [
             "Manage Award",
