@@ -89,11 +89,47 @@ class HomeController extends Controller
                 $date               = date("Y-m-d");
                 $time               = date("H:i:s");
                 $employeeAttendance = AttendanceEmployee::orderBy('id', 'desc')->where('employee_id', '=', !empty(\Auth::user()->employee) ? \Auth::user()->employee->id : 0)->where('date', '=', $date)->first();
-
+                $user      = User::where('type', '!=', 'employee')->where('created_by', '=', \Auth::user()->creatorId())->get();
+                $countUser = count($user);
                 $officeTime['startTime'] = Utility::getValByName('company_start_time');
                 $officeTime['endTime']   = Utility::getValByName('company_end_time');
 
-                return view('dashboard.dashboard', compact('arrEvents', 'announcements', 'employees', 'meetings', 'employeeAttendance', 'officeTime'));
+
+                $user      = User::where('type', '!=', 'employee')->where('created_by', '=', \Auth::user()->creatorId())->get();
+                $countUser = count($user);
+                $countTicket      = Ticket::where('created_by', '=', \Auth::user()->creatorId())->count();
+                $countOpenTicket  = Ticket::where('status', '=', 'open')->where('created_by', '=', \Auth::user()->creatorId())->count();
+                $countCloseTicket = Ticket::where('status', '=', 'close')->where('created_by', '=', \Auth::user()->creatorId())->count();
+
+                $currentDate = date('Y-m-d');
+
+                $employees     = User::where('type', '=', 'employee')->where('created_by', '=', \Auth::user()->creatorId())->get();
+                $countEmployee = count($employees);
+
+                $notClockIn    = AttendanceEmployee::where('date', '=', $currentDate)->get()->pluck('employee_id');
+
+                $notClockIns = Employee::where('created_by', '=', \Auth::user()->creatorId())->whereNotIn('id', $notClockIn)->get();
+
+                $accountBalance = AccountList::where('created_by', '=', \Auth::user()->creatorId())->sum('initial_balance');
+                $activeJob   = Job::where('status', 'active')->where('created_by', '=', \Auth::user()->creatorId())->count();
+                $inActiveJOb = Job::where('status', 'in_active')->where('created_by', '=', \Auth::user()->creatorId())->count();
+
+                $totalPayee = Payees::where('created_by', '=', \Auth::user()->creatorId())->count();
+                $totalPayer = Payer::where('created_by', '=', \Auth::user()->creatorId())->count();
+
+                $meetings = Meeting::where('created_by', '=', \Auth::user()->creatorId())->limit(8)->get();
+
+                $users = User::find(\Auth::user()->creatorId());
+               
+               
+                $plan = Plan::find($users->plan);
+                if ($plan->storage_limit > 0) {
+                    $storage_limit = ($users->storage_limit / $plan->storage_limit) * 100;
+                } else {
+                    $storage_limit = 0;
+                }
+                // return view('dashboard.dashboard', compact('arrEvents', 'announcements', 'employees', 'meetings', 'employeeAttendance', 'officeTime'));
+                 return view('dashboard.dashboard', compact('arrEvents', 'announcements', 'employees', 'employeeAttendance' , 'officeTime' , 'activeJob', 'inActiveJOb', 'meetings', 'countEmployee', 'countUser', 'countTicket', 'countOpenTicket', 'countCloseTicket', 'notClockIns', 'accountBalance', 'totalPayee', 'totalPayer', 'users', 'plan', 'storage_limit'));
             } 
             else if ($user->type == 'mentor') {
                 $employee = Employee::where('user_id' , Auth::id())->first();
@@ -114,7 +150,8 @@ class HomeController extends Controller
                 $chartData = $this->getOrderChart(['duration' => 'week']);
 
                 return view('dashboard.super_admin', compact('user', 'chartData'));
-            } else {
+            } 
+            else {
                 
                 $events    = Event::where('created_by', '=', \Auth::user()->creatorId())->get();
                 $arrEvents = [];
