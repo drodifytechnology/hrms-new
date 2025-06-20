@@ -37,7 +37,7 @@ class Internship extends Model
     }
     public function department()
     {
-        return $this->hasOne('App\Models\Branch\department' , 'id' , 'department');
+        return $this->hasOne('App\Models\department' , 'id' , 'department');
     }
 
 }
