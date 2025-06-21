@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('priority')->default(1);
             $table->enum('status', ['Pending', 'In Progress', 'Completed'])->default('Pending');
             $table->date('deadline')->nullable();
+            $table->text('url')->nullable();
             $table->timestamps();
             $table->foreign('internship_id')->references('id')->on('internships')->onDelete('cascade');
         });

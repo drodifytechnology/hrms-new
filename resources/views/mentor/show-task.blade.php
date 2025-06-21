@@ -32,6 +32,30 @@
                                         <span>{{ $task->deadline }}</span>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold">{{ __('priority') }} :</strong>
+                                        <span>{{ $task->priority }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold">{{ status }} :</strong>
+                                        <span>@include('components.status-badge', ['status' => $task->status])</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold">{{ Drive Url }} :</strong>
+                                        <span><a href="{{ $task->url }}" download>Download attachment</a></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold">{{ Attachment }} :</strong>
+                                        <span><a href="{{ asset('public/storage/' . $task->attachment) }}" download>Download attachment</a></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

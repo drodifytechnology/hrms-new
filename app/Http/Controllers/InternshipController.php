@@ -93,12 +93,14 @@ class InternshipController extends Controller
             
             $mentor = DB::table('employees')->where('id', $request->primary_mentor_id)->first();
             
-             User::find($intern_user_id->user_id)->update(['type' => 'intern']);
-             User::find($mentor->user_id)->update(['type' => 'mentor']);
+            User::find($intern_user_id->user_id)->update(['type' => 'intern']);
+            User::find($mentor->user_id)->update(['type' => 'mentor']);
+
+            User::find($intern_user_id->user_id)->removeRole('Employee');
             User::find($intern_user_id->user_id)->assignRole('intern');
+            User::find($mentor->user_id)->removeRole('Employee');
             User::find($mentor->user_id)->assignRole('mentor');
 
-          
          return redirect()->route('internships.index')->with('success', 'Internship created successfully.');
     }
   public function update(Request $request, $id)
@@ -226,7 +228,7 @@ class InternshipController extends Controller
                     if($mentor1){
                         $user->removeRole('mentor');
                         $user->assignRole('Employee');
-                    }
+                        }
                 }
                 
             

@@ -182,9 +182,14 @@
             <?php endif; ?>
             <?php if(Gate::check('View assigned interns') ): ?>
                 <li class="dash-item <?php echo e(Request::segment(1) == 'evaluations' ? 'active' : ''); ?>">
-                    <a href="<?php echo e(route('mentor.evaluations')); ?>"
+                    <a href="<?php echo e(route('mentor.evaluations.pending')); ?>"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
-                            class="dash-mtext"><?php echo e(__('Provide evaluations')); ?></span></a>
+                            class="dash-mtext"><?php echo e(__('Pending evaluations')); ?></span></a>
+                </li>
+                <li class="dash-item <?php echo e(Request::segment(1) == 'evaluations-submitted' ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('mentor.evaluations.submitted')); ?>"
+                        class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
+                            class="dash-mtext"><?php echo e(__('Evaluations')); ?></span></a>
                 </li>
             <?php endif; ?>
             <?php if(Gate::check('Certificate') ): ?>

@@ -61,6 +61,47 @@ class MentorController extends Controller
         return back()->with('success', 'Evaluation submitted successfully.');
     }
 
+    public function pendingEvaluations() {
+        $pending = InternEvaluation::with(['internship.intern', 'task'])
+            ->where('evaluator_id', Auth::id())
+            ->where('status', 'Pending')
+            ->get();
+        return view('mentor.pending-evaluations', compact('pending'));
+    }
+
+    public function showEvaluationForm($id) {
+        $evaluation = InternEvaluation::with(['internship.intern', 'task'])
+            ->where('id', $id)
+            ->where('evaluator_id', Auth::id())
+            ->firstOrFail();
+        return view('mentor.evaluations', compact('evaluation'));
+    }
+
+    public function submitEvaluationFeedback(Request $request, $id) {
+        $evaluation = InternEvaluation::where('id', $id)
+            ->where('evaluator_id', Auth::id())
+            ->firstOrFail();
+
+        $request->validate([
+            'score' => 'required|integer|min:0|max:100',
+            'feedback' => 'required|string|max:1000'
+        ]);
+
+        $evaluation->update([
+            'score' => $request->score,
+            'feedback' => $request->feedback,
+            'status' => 'Submitted'
+        ]);
+
+        return redirect()->route('mentor.evaluations.pending')->with('success', 'Evaluation submitted successfully.');
+    }
+    public function submittedEvaluations() {
+        $submitted = InternEvaluation::with(['internship.intern', 'task'])
+            ->where('evaluator_id', Auth::id())
+            ->where('status', 'Submitted')
+            ->get();
+        return view('mentor.submitted-evaluations', compact('submitted'));
+    }
     public function assignTask(Request $request) {
         $request->validate([
             'internship_id' => 'required|exists:internships,id',
@@ -75,13 +116,21 @@ class MentorController extends Controller
                 $file_path = $request->file('attachment')->store('attachment', 'public');
           }
 
-        InternTask::create([
+       $task = InternTask::create([
             'internship_id' => $request->internship_id,
             'title' => $request->title,
             'priority' => $request->priority,
             'description' => $request->description,
             'deadline' => $request->deadline,
+            'url' => $request->url,
             'attachment' => $file_path
+        ]);
+        // Auto-insert new pending evaluation
+        InternEvaluation::create([
+            'internship_id' => $request->internship_id,
+            'evaluator_id' => Auth::id(),
+            'task_id' => $task->id,
+            'status' => 'Pending'
         ]);
 
         return back()->with('success', 'Task assigned successfully.');

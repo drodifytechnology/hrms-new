@@ -1788,15 +1788,21 @@ Route::group(
     Route::get('/intern', [MentorController::class, 'intern'])->name('intern');
     Route::get('/task-activity', [MentorController::class, 'taskList'])->name('intern-asign-task');
     Route::get('/show-task/{id}', [MentorController::class, 'viewTask'])->name('task.view');
-    Route::get('/evaluations', [MentorController::class, 'evaluations'])->name('mentor.evaluations');
-    Route::post('/evaluations/submit', [MentorController::class, 'submitEvaluation'])->name('mentor.evaluations.submit');
+    // Route::get('/evaluations', [MentorController::class, 'evaluations'])->name('mentor.evaluations');s
+    // Route::post('/evaluations/submit', [MentorController::class, 'submitEvaluation'])->name('mentor.evaluations.submit');
+    Route::get('evaluations/pending', [MentorController::class, 'pendingEvaluations'])->name('mentor.evaluations.pending');
+    Route::get('evaluations/{id}/edit', [MentorController::class, 'showEvaluationForm'])->name('mentor.evaluations.edit');
+    Route::post('evaluations/{id}/submit', [MentorController::class, 'submitEvaluationFeedback'])->name('mentor.evaluations.submit');
+    Route::get('evaluations-submitted', [MentorController::class, 'submittedEvaluations'])->name('mentor.evaluations.submitted');
+
+
     Route::post('/tasks/assign', [MentorController::class, 'assignTask'])->name('mentor.tasks.assign');
     
 });
 
 
 
-    // remove biometric code
+    // remove biometric code    
     // BiometricAttendance
     // Route::post('biometric-setting', [SettingsController::class, 'BiometricSetting'])->name('biometric-settings.store')->middleware(['auth', 'XSS']);
     // Route::resource('/biometric-attendance', BiometricAttendanceController::class)->middleware(

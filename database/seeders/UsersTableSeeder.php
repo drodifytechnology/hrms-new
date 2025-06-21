@@ -2637,18 +2637,13 @@ class UsersTableSeeder extends Seeder
         $employeeRole->givePermissionTo($employeePermission);
 
         //Intern
-        $InternemployeeRole       = Role::create(
+        $InternemployeeRole = Role::create(
             [
                 'name' => 'intern',
                 'created_by' => $company->id,
             ]
         );
         $InternemployeePermission = [
-            
-            
-            'Manage Employee',
-            'Edit Employee',
-            'Show Employee',
             'Manage Allowance',
             'Certificate',
             'Tasks',

@@ -45,8 +45,6 @@
                             </td>
                             <td>
                                 <button type="button" onclick="assignTask('{{ $internship->id }}','{{ $internship->intern->name }} - {{ $internship->department }}')" class="btn btn-primary btn-sm "  >Assign Task</button>
-                                <button type="button" onclick="assignTask('{{ $internship->id }}','{{ $internship->intern->name }} - {{ $internship->department }}')" class="btn btn-primary btn-sm "  >Assign Task</button>
-                                
                                 <!-- <button type="submit" class="btn btn-primary btn-sm">Assign Task</button> -->
                             </td>
                           </tr>
@@ -68,7 +66,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ route('mentor.tasks.assign') }}" class="mb-3" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('mentor.tasks.assign') }}" class="mb-3 needs-validation" novalidate enctype="multipart/form-data">
                 <div class="modal-body">
                             @csrf
                             <input type="hidden" name="internship_id" id="internship_id" class="form-control" value="">
@@ -79,19 +77,23 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Description</label>
-                                    <textarea name="description" placeholder="Task description" class="form-control"></textarea>
+                                    <textarea name="description" placeholder="Task description" class="form-control" required></textarea>
                                 </div>   
                                <div class="form-group col-md-6">
                                     <label>Deadline</label>
-                                    <input type="date" name="deadline" class="form-control">
+                                    <input type="date" name="deadline" class="form-control" required>
                                 </div>
                                <div class="form-group col-md-6">
                                     <label>Priority</label>
-                                    <input type="number" name="priority" class="form-control">
+                                    <input type="number" name="priority" class="form-control" required>
                                 </div>
                                <div class="form-group col-md-6">
                                     <label>Attachment</label>
-                                    <input type="file" name="attachment" class="form-control">
+                                    <input type="file" name="attachment" class="form-control" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Drive url</label>
+                                    <input type="text" name="url" placeholder="Task title" class="form-control">
                                 </div>
                             </div>
                             

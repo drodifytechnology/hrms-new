@@ -26,13 +26,13 @@
                 </div>
                 <?php echo e(Form::open(['route' => ['employee.store'], 'method' => 'post', 'enctype' => 'multipart/form-data', 'class' => 'needs-validation', 'novalidate'])); ?>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card em-card">
-                            <div class="card-header">
-                                <h5><?php echo e(__('Personal Detail')); ?></h5>
-                            </div>
-                            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card em-card">
+                                <div class="card-header">
+                                    <h5><?php echo e(__('Personal Detail')); ?></h5>
+                                </div>
+                                <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <?php echo Form::label('name', __('Name'), ['class' => 'form-label']); ?><?php if (isset($component)) { $__componentOriginalbba606fec37ea04333bc269e3e165587 = $component; } ?>

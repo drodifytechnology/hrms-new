@@ -33,6 +33,30 @@
                                         <span><?php echo e($task->deadline); ?></span>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold"><?php echo e(__('priority')); ?> :</strong>
+                                        <span><?php echo e($task->priority); ?></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold"><?php echo e(status); ?> :</strong>
+                                        <span><?php echo $__env->make('components.status-badge', ['status' => $task->status], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold"><?php echo e(Drive Url); ?> :</strong>
+                                        <span><a href="<?php echo e($task->url); ?>" download>Download attachment</a></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info text-sm font-style">
+                                        <strong class="font-bold"><?php echo e(Attachment); ?> :</strong>
+                                        <span><a href="<?php echo e(asset('public/storage/' . $task->attachment)); ?>" download>Download attachment</a></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

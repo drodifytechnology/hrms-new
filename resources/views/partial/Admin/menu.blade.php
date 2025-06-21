@@ -186,9 +186,14 @@
             @endif
             @if (Gate::check('View assigned interns') )
                 <li class="dash-item {{ Request::segment(1) == 'evaluations' ? 'active' : '' }}">
-                    <a href="{{ route('mentor.evaluations') }}"
+                    <a href="{{ route('mentor.evaluations.pending') }}"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
-                            class="dash-mtext">{{ __('Provide evaluations') }}</span></a>
+                            class="dash-mtext">{{ __('Pending evaluations') }}</span></a>
+                </li>
+                <li class="dash-item {{ Request::segment(1) == 'evaluations-submitted' ? 'active' : '' }}">
+                    <a href="{{ route('mentor.evaluations.submitted') }}"
+                        class="dash-link"><span class="dash-micon"><i class="ti ti-user"></i></span><span
+                            class="dash-mtext">{{ __('Evaluations') }}</span></a>
                 </li>
             @endif
             @if (Gate::check('Certificate') )

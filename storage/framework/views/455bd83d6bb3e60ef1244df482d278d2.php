@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-       <div class="modal fade show-modal bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal fade show-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -69,12 +69,10 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="<?php echo e(route('mentor.tasks.assign')); ?>" class="mb-3" enctype="multipart/form-data">
+                <form method="POST" action="<?php echo e(route('mentor.tasks.assign')); ?>" class="mb-3 needs-validation" novalidate enctype="multipart/form-data">
                 <div class="modal-body">
-                        
                             <?php echo csrf_field(); ?>
                             <input type="hidden" name="internship_id" id="internship_id" class="form-control" value="">
-                            
                             <div class="row" >
                                 <div class="form-group col-md-6">
                                     <label>Title</label>
@@ -82,19 +80,23 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Description</label>
-                                    <textarea name="description" placeholder="Task description" class="form-control"></textarea>
+                                    <textarea name="description" placeholder="Task description" class="form-control" required></textarea>
                                 </div>   
                                <div class="form-group col-md-6">
                                     <label>Deadline</label>
-                                    <input type="date" name="deadline" class="form-control">
+                                    <input type="date" name="deadline" class="form-control" required>
                                 </div>
                                <div class="form-group col-md-6">
                                     <label>Priority</label>
-                                    <input type="number" name="priority" class="form-control">
+                                    <input type="number" name="priority" class="form-control" required>
                                 </div>
                                <div class="form-group col-md-6">
                                     <label>Attachment</label>
-                                    <input type="file" name="attachment" class="form-control">
+                                    <input type="file" name="attachment" class="form-control" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Drive url</label>
+                                    <input type="text" name="url" placeholder="Task title" class="form-control">
                                 </div>
                             </div>
                             
@@ -107,7 +109,6 @@
                 </div>
             </div>
        </div>
-
         
         <?php $__env->stopSection(); ?>
         <?php $__env->startPush('script-page'); ?>

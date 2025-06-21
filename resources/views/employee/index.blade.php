@@ -52,6 +52,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($employees)
                                 @foreach ($employees as $employee)
                                     <tr>
                                         <td>
@@ -162,6 +163,7 @@
                                         @endif
                                     </tr>
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

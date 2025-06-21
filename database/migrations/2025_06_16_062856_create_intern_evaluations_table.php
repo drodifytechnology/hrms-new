@@ -12,13 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('intern_evaluations', function (Blueprint $table) {
-             $table->id();
-            $table->unsignedBigInteger('internship_id');
-            $table->unsignedBigInteger('evaluator_id');
-            $table->integer('score')->nullable();
-            $table->text('feedback')->nullable();
-            $table->timestamps();
-            $table->foreign('internship_id')->references('id')->on('internships')->onDelete('cascade');
+           
+                $table->id();
+                $table->unsignedBigInteger('internship_id');
+                $table->unsignedBigInteger('evaluator_id');
+                $table->unsignedBigInteger('task_id')->nullable();
+                $table->integer('score')->nullable();
+                $table->text('feedback')->nullable();
+                $table->enum('status', ['Pending', 'Submitted'])->default('Pending');
+                $table->timestamps();
+
+                $table->foreign('internship_id')->references('id')->on('internships')->onDelete('cascade');
+         
         });     
     }
 
